@@ -3,11 +3,13 @@
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="showModal()">新建医院</a-button>
     </div>
+    <!--    <a-table :dataSource="loadHospitalList" :columns="columns" />-->
     <s-table
       :columns="columns"
       ref="table"
       rowKey="key"
-      :data="loadData"
+      :data="hospitalList"
+      :show-pagination="false"
     >
       <span slot="action" slot-scope="text, record">
         <template>
@@ -17,12 +19,12 @@
         </template>
       </span>
     </s-table>
-    <!--    <create-form-->
-    <!--      ref="createModal"-->
-    <!--      :visible="visible"-->
-    <!--      @cancel="handleCancel"-->
-    <!--      @ok="() => {this.visible = false}"-->
-    <!--    />-->
+    <create-form
+      ref="createModal"
+      :visible="visible"
+      @cancel="handleCancel"
+      @ok="() => {this.visible = false}"
+    />
     <create-hospital
       ref="createModal"
       :visible="visible"
@@ -37,7 +39,7 @@
 </template>
 
 <script>
-import { getServiceList } from '@/api/manage'
+import { createHospital, getHospitalList, getServiceList, updateHospitalInfo } from '@/api/manage'
 import { STable } from '@/components'
 import CreateForm from '@/views/list/modules/CreateForm'
 import CreateHospital from '@/views/a_hospital/modal/CreateHospital'
@@ -49,12 +51,16 @@ export default {
     CreateForm,
     CreateHospital
   },
+  mounted () {
+    // this.loadHospitalList()
+  },
   data () {
     return {
       // 编辑医院名称信息
       mdl: null,
       // 提交loading
       confirmLoading: false,
+      record: null,
       // 编辑 / 新增弹窗
       visible: false,
       // 表头
@@ -68,9 +74,8 @@ export default {
           dataIndex: 'name'
         },
         // {
-        //   title: '状态',
-        //   dataIndex: 'status',
-        //   needTotal: true
+        //   title: '备注',
+        //   dataIndex: 'description'
         // },
         {
           title: '操作',
@@ -79,20 +84,36 @@ export default {
           scopedSlots: { customRender: 'action' }
         }
       ],
+      selectData: null,
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
         return getServiceList(Object.assign(parameter, this.queryParam))
           .then(res => {
+            console.log('----', res)
             return res.result
           })
-      }
+      },
+     hospitalList: parameter => {
+       return getHospitalList({ pageNum: 1, pageSize: 100 })
+         .then(res => {
+           console.log('-------------------', res.data)
+           return res
+         })
+     }
     }
   },
   methods: {
+    loadHospitalList () {
+      getHospitalList()
+        .then(res => {
+          console.log('医院列表数据', res)
+          // this.hospitalList = res.result
+        })
+    },
     // 新建医院弹窗
     showModal (record) {
       console.log(record)
+      this.record = record
       record && (this.mdl = { ...record })
       this.visible = true
     },
@@ -106,9 +127,9 @@ export default {
           if (values.id > 0) {
             // 修改 e.g.
             new Promise((resolve, reject) => {
-              setTimeout(() => {
+              updateHospitalInfo(values).then(res => {
                 resolve()
-              }, 1000)
+              })
             }).then(res => {
               this.visible = false
               this.confirmLoading = false
@@ -122,9 +143,10 @@ export default {
           } else {
             // 新增
             new Promise((resolve, reject) => {
-              setTimeout(() => {
+              delete values.id
+              createHospital(values).then(res => {
                 resolve()
-              }, 1000)
+              })
             }).then(res => {
               this.visible = false
               this.confirmLoading = false
@@ -145,7 +167,7 @@ export default {
       const form = this.$refs.createModal.form
       form.resetFields() // 清理表单数据
     },
-    // 查询医院状态弹窗
+    // 查询医院详情
     editInfo (e) {
       const { id } = e
       this.$router.push({ path: '/hospital/hospital-info', query: { id } })

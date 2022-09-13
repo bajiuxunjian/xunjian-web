@@ -4,8 +4,9 @@ import storage from 'store'
 import moment from 'moment'
 
 // default lang
-import enUS from './lang/en-US'
-
+// import enUS from './lang/en-US'
+import znCH from './lang/zh-CN'
+const enUS = znCH
 Vue.use(VueI18n)
 
 export const defaultLang = 'en-US'

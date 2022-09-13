@@ -3,6 +3,50 @@ import { builder, getQueryParameters } from '../util'
 
 const totalCount = 889
 
+const getHospitalInspectList = () => {
+  const result = [
+    {
+      key: 1,
+      id: 1,
+      status: true,
+      name: '2022-08-22',
+      description: '日检'
+    },
+    {
+      key: 2,
+      id: 2,
+      status: false,
+      name: '2022-08-23',
+      description: '月检'
+    }
+
+  ]
+  return builder({
+    data: result
+  })
+}
+
+const mockHospitalList = () => {
+  const result = [
+  {
+    key: 1,
+    id: 1,
+    name: '兰州重离子医院mock',
+    description: '这是一段描述'
+  },
+  {
+    key: 2,
+    id: 2,
+    name: '福建重离子医院mock',
+    description: '这是一段描述'
+  }
+
+  ]
+  return builder({
+    data: result
+  })
+}
+
 const serverList = (options) => {
   const parameters = getQueryParameters(options)
 
@@ -245,6 +289,9 @@ const radar = () => {
   // }
   ])
 }
+
+Mock.mock(/\/hospitalList/, 'get', mockHospitalList)
+Mock.mock(/\/getHospitalInspectList/, 'get', getHospitalInspectList)
 
 Mock.mock(/\/service/, 'get', serverList)
 Mock.mock(/\/list\/search\/projects/, 'get', projects)

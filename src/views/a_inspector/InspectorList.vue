@@ -1,11 +1,11 @@
 <template>
   <page-header-wrapper
-    content="质检配置列表的介绍巴拉巴拉巴拉不知道填什么"
   >
+    <!--    content="质检配置列表的介绍巴拉巴拉巴拉不知道填什么"-->
     <a-list
       rowKey="id"
       :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
-      :dataSource="dataSource"
+      :dataSource="inspectorList"
       class="card-list"
     >
       <a-list-item slot="renderItem" slot-scope="item">
@@ -17,14 +17,21 @@
         </template>
         <template v-else>
           <a-card :hoverable="true">
+            <b slot="title">{{ item.name }}</b>
+            <a slot="extra" v-if="+item.day == 1">日检</a>
+            <a slot="extra" v-if="+item.month == 1">月检</a>
+            <a slot="extra" v-if="+item.year == 1">年检</a>
             <a-card-meta>
-              <a slot="title">{{ item.title }}</a>
-              <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
-              <div class="meta-content" slot="description">{{ item.content }}</div>
+              <div class="meta-content" slot="description">{{ item.goal }}</div>
             </a-card-meta>
             <template class="ant-card-actions" slot="actions">
               <a @click="addConfig(item)">编辑</a>
-              <a>删除</a>
+              <a-popconfirm placement="top" ok-text="Yes" cancel-text="No" @confirm="del(item.id)">
+                <template slot="title">
+                  <p>删除质检配置可能导致已经在用的检测异常且无法找回,是否确认删除？</p>
+                </template>
+                <a>删除</a>
+              </a-popconfirm>
             </template>
           </a-card>
         </template>
@@ -35,29 +42,52 @@
 
 <script>
 
-const dataSource = []
-dataSource.push({})
-for (let i = 0; i < 11; i++) {
-  dataSource.push({
-    id: i,
-    title: '检测名称',
-    avatar: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
-    content: '我是展示检测目的巴拉巴拉巴拉'
-  })
-}
+import { delInspectorById, getAllInspectorList } from '@/api/manage'
+
+// const dataSource = []
+// dataSource.push({})
+// for (let i = 0; i < 3; i++) {
+//   dataSource.push({
+//     id: i,
+//     title: '检测名称',
+//     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
+//     content: '我是展示检测目的巴拉巴拉巴拉'
+//   })
+// }
 
 export default {
   name: 'InspectorList',
+  mounted () {
+    this.getAllInspectorList()
+  },
   methods: {
+    // 拉取所有检测单元列表
+    async getAllInspectorList () {
+      const res = await getAllInspectorList()
+      this.inspectorList = res?.data || []
+      console.log('=====================', this.inspectorList)
+      this.inspectorList.unshift({})
+    },
     // 跳入新增
     addConfig (item) {
       item ? this.$router.push({ path: '/main/inspector-edit', query: { id: item.id } }) : this.$router.push({ path: '/main/inspector-edit' })
+    },
+    // 删除检测数据
+    async del (id) {
+      try {
+        await delInspectorById({ id })
+        await this.getAllInspectorList()
+      } catch (e) {
+        console.error('结果异常')
+      }
     }
+
   },
   data () {
     return {
-      extraImage: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
-      dataSource
+      inspectorList: [{}],
+      extraImage: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png'
+      // dataSource
     }
   }
 
@@ -133,6 +163,6 @@ export default {
   background-color: #fff;
   border-radius: 2px;
   width: 100%;
-  height: 188px;
+  height: 220px;
 }
 </style>

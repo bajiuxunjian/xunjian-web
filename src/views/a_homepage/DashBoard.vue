@@ -7,41 +7,41 @@
         </div>
         <div class="content">
           <div class="content-title">
-            {{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ '欢迎回来' }}</span>
+            {{ timeFix }}，{{ user.username }}<span class="welcome-text">，{{ '欢迎回来' }}</span>
           </div>
-          <div>质检中心平台</div>
+          <!--          <div>质检中心平台</div>-->
         </div>
       </div>
     </template>
     <template v-slot:extraContent>
       <div class="extra-content">
+        <!--        <div class="stat-item">-->
+        <!--          <a-statistic title="医院数" :value="2" />-->
+        <!--        </div>-->
         <div class="stat-item">
-          <a-statistic title="医院数" :value="2" />
-        </div>
-        <div class="stat-item">
-          <a-statistic title="今日已完成质检" :value="8" suffix="/ 24" />
+          <a-statistic title="今日已完成质检单位" :value="8" suffix="/ 24" />
         </div>
       </div>
     </template>
-    <div>
+    <div v-if="~~hId === 0">
       <a-row :gutter="24">
-        <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card
             class="project-list"
             :loading="loading"
             style="margin-bottom: 24px;"
             :bordered="false"
-            title="进行中的项目"
+            title="医院列表"
             :body-style="{ padding: 0 }"
           >
             <!--            <a slot="extra">全部项目</a>-->
             <div>
               <a-card-grid class="project-card-grid" :key="i" v-for="(item, i) in projects">
-                <a-card :bordered="false" :body-style="{ padding: 0 }">
+                <a-card :bordered="false" :body-style="{ padding: 0 }" style="cursor: pointer;user-select: none" @click="gotoHospital(item)">
                   <a-card-meta>
                     <div slot="title" class="card-title">
-                      <a-avatar size="small" :src="item.cover" />
-                      <a>{{ item.title }}</a>
+                      <!--                      <a-avatar size="small" :src="item.cover" />-->
+                      <a>{{ item.name }}</a>
                     </div>
                     <div slot="description" class="card-description">
                       {{ item.description }}
@@ -74,55 +74,104 @@
             </a-list>
           </a-card>
         </a-col>
-        <a-col
-          style="padding: 0 12px"
-          :xl="8"
-          :lg="24"
-          :md="24"
-          :sm="24"
-          :xs="24">
+        <!--        <a-col-->
+        <!--          style="padding: 0 12px"-->
+        <!--          :xl="8"-->
+        <!--          :lg="24"-->
+        <!--          :md="24"-->
+        <!--          :sm="24"-->
+        <!--          :xs="24">-->
+        <!--          <a-card-->
+        <!--            title="快速开始 / 便捷导航"-->
+        <!--            style="margin-bottom: 24px"-->
+        <!--            :bordered="false"-->
+        <!--            :body-style="{ padding: 0 }"-->
+        <!--          >-->
+        <!--            <div class="item-group">-->
+        <!--              <a>新增配置</a>-->
+        <!--              <a>新增人员</a>-->
+        <!--              <a>查看医院</a>-->
+        <!--              <a>未定义1</a>-->
+        <!--              <a>未定义2</a>-->
+        <!--              <a-button size="small" type="primary" ghost icon="plus">添加</a-button>-->
+        <!--            </div>-->
+        <!--          </a-card>-->
+        <!--          <a-card-->
+        <!--            title="XX 指数"-->
+        <!--            style="margin-bottom: 24px"-->
+        <!--            :loading="radarLoading"-->
+        <!--            :bordered="false"-->
+        <!--            :body-style="{ padding: 0 }"-->
+        <!--          >-->
+        <!--            <div style="min-height: 400px;">-->
+        <!--              &lt;!&ndash; :scale="scale" :axis1Opts="axis1Opts" :axis2Opts="axis2Opts"  &ndash;&gt;-->
+        <!--              <radar :data="radarData" />-->
+        <!--            </div>-->
+        <!--          </a-card>-->
+        <!--          <a-card :loading="loading" title="团队" :bordered="false">-->
+        <!--            <div class="members">-->
+        <!--              <a-row>-->
+        <!--                <a-col :span="12" v-for="(item, index) in teams" :key="index">-->
+        <!--                  <a>-->
+        <!--                    <a-avatar size="small" :src="item.avatar" />-->
+        <!--                    <span class="member">{{ item.name }}</span>-->
+        <!--                  </a>-->
+        <!--                </a-col>-->
+        <!--              </a-row>-->
+        <!--            </div>-->
+        <!--          </a-card>-->
+        <!--        </a-col>-->
+      </a-row>
+    </div>
+    <div v-else>
+      <a-row :gutter="24">
+        <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card
-            title="快速开始 / 便捷导航"
-            style="margin-bottom: 24px"
-            :bordered="false"
+            title="待完成检测"
             :body-style="{ padding: 0 }"
           >
-            <div class="item-group">
-              <a>新增配置</a>
-              <a>新增人员</a>
-              <a>查看医院</a>
-              <a>未定义1</a>
-              <a>未定义2</a>
-              <a-button size="small" type="primary" ghost icon="plus">添加</a-button>
-            </div>
-          </a-card>
-          <a-card
-            title="XX 指数"
-            style="margin-bottom: 24px"
-            :loading="radarLoading"
-            :bordered="false"
-            :body-style="{ padding: 0 }"
-          >
-            <div style="min-height: 400px;">
-              <!-- :scale="scale" :axis1Opts="axis1Opts" :axis2Opts="axis2Opts"  -->
-              <radar :data="radarData" />
-            </div>
-          </a-card>
-          <a-card :loading="loading" title="团队" :bordered="false">
-            <div class="members">
-              <a-row>
-                <a-col :span="12" v-for="(item, index) in teams" :key="index">
-                  <a>
-                    <a-avatar size="small" :src="item.avatar" />
-                    <span class="member">{{ item.name }}</span>
-                  </a>
-                </a-col>
-              </a-row>
-            </div>
+            <a-list item-layout="horizontal" :data-source="pendingInspectData" style="padding-left: 20px;">
+              <a-list-item slot="renderItem" slot-scope="item">
+                <a-list-item-meta
+                  :title="item.title"
+                >
+                  <div slot="description">
+                    <b style="color: #000;font-size: 16px">{{ item.name }}</b>
+                    <!--                    <a-popconfirm-->
+                    <!--                      title="是否确认快速完成?"-->
+                    <!--                      ok-text="确认"-->
+                    <!--                      cancel-text="取消"-->
+                    <!--                      @confirm="() => {}"-->
+                    <!--                      @cancel="() => {}"-->
+                    <!--                      style="float: right;margin-right: 10px"-->
+                    <!--                    >-->
+                    <!--                      <a>急速确认</a>-->
+                    <!--                    </a-popconfirm>-->
+                    <a @click="showInfo(item)" style="float: right;margin-right: 50px">详情</a>
+                    <div>
+                      {{ item.goal }}
+                    </div>
+                  </div>
+                </a-list-item-meta>
+              </a-list-item>
+            </a-list>
           </a-card>
         </a-col>
       </a-row>
     </div>
+    <!--    <a-drawer-->
+    <!--      title="Basic Drawer"-->
+    <!--      placement="right"-->
+    <!--      :closable="false"-->
+    <!--      :visible="visibleDrawer"-->
+    <!--      @close="visibleDrawer = false"-->
+    <!--    >-->
+    <!--      &lt;!&ndash;      :after-visible-change="afterVisibleChange"&ndash;&gt;-->
+    <!--      &lt;!&ndash;      @close="onCloseDrawer"&ndash;&gt;-->
+    <!--      <p>Some contents...</p>-->
+    <!--      <p>Some contents...</p>-->
+    <!--      <p>Some contents...</p>-->
+    <!--    </a-drawer>-->
   </page-header-wrapper>
 </template>
 
@@ -131,9 +180,23 @@ import { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import { Radar } from '@/components'
 import { timeFix } from '@/utils/util'
 import { mapState } from 'vuex'
-import { getRoleList, getServiceList } from '@/api/manage'
+import { getAllInspectorList, getHospitalList, getRoleList, getServiceList } from '@/api/manage'
 import DataSet from '@antv/data-set'
-
+import { getCheckListByHospitalId } from '@/api/check'
+const data = [
+  {
+    title: 'Ant Design Title 1'
+  },
+  {
+    title: 'Ant Design Title 2'
+  },
+  {
+    title: 'Ant Design Title 3'
+  },
+  {
+    title: 'Ant Design Title 4'
+  }
+]
 export default {
   name: 'DashBoard',
   components: {
@@ -142,6 +205,12 @@ export default {
   },
   data () {
     return {
+      data,
+      pendingInspectData: [],
+      // 医院id 0为管理员
+      hId: 0,
+      // 详情展示
+      visibleDrawer: false,
       timeFix: timeFix(),
       avatar: '',
       user: {},
@@ -210,6 +279,9 @@ export default {
   },
   created () {
     this.user = this.userInfo
+    console.log('-----------------')
+    console.log(this.user)
+    this.hId = this.user.hospitalId || 0
     this.avatar = this.userInfo.avatar
 
     getRoleList().then(res => {
@@ -220,13 +292,92 @@ export default {
       // console.log('workplace -> call getServiceList()', res)
     })
   },
-  mounted () {
-    this.getProjects()
+  async mounted () {
+    // this.getProjects()
+    if (~~this.hId === 0) {
+      this.getHospitalList()
+    } else {
+      //
+      await this.getSurplusInspect()
+    }
+
     this.getActivity()
     this.getTeams()
     this.initRadar()
   },
   methods: {
+    // 跳转到对应医院详情
+    gotoHospital (item) {
+      const { id } = item
+      this.$router.push({ path: '/hospital/hospital-info', query: { id } })
+    },
+    // 获取医院列表
+    getHospitalList () {
+      getHospitalList({ pageNum: 1, pageSize: 100 }).then(res => {
+        console.log('=========================')
+        console.log(res)
+        this.projects = res.data || []
+        this.loading = false
+      })
+    },
+    async getSurplusInspect () {
+      const { data } = await getCheckListByHospitalId({ hospitalId: this.hId, pageNum: 1, pageSize: 10000 })
+      const inspectRes = await getAllInspectorList({ pageNum: 1, pageSize: 10000 })
+      const inspectAllList = inspectRes.data || []
+      const inspectList = data?.filter(i => !i?.status)
+      // 未编辑数组
+      const arr = []
+      inspectList.forEach(el => {
+        console.log(el)
+        if (!el?.status) {
+          if (el?.inspect) {
+            // 有选择内容
+            try {
+              // console.log('====================', JSON.parse(el.inspect).filter(i => !i?.status))
+              arr.push(...JSON.parse(el.inspect).filter(i => !i?.status).map(i => {
+                return {
+                  ...i,
+                  formId: el.id,
+                  fromType: el.type
+                }
+              }))
+            } catch (e) {
+              console.error(e)
+            }
+          } else {
+            // 没有选择内容
+            if (el?.inspectConfig) {
+              // 有配置
+              try {
+                arr.push(...el?.inspectConfig.split(',').map(i => {
+                  return {
+                    ...inspectAllList.find(j => +j?.id === +i),
+                    formId: el.id,
+                    fromType: el.type
+                  }
+                }))
+              } catch (e) {
+                console.error(e)
+              }
+            } else {
+              // 没有配置
+            }
+            // console.log('run this')
+          }
+        }
+      })
+      // console.log(arr)
+      // console.log('------------------------', data)
+      this.pendingInspectData = arr
+    },
+    // 展示当前条数详情
+    showInfo (record) {
+      console.log('----------------------')
+      console.log(record)
+      const { formId, fromType } = record
+      console.log(formId)
+      this.$router.push({ path: '/check-info', query: { id: formId, type: fromType } })
+    },
     getProjects () {
       this.$http.get('/list/search/projects').then(res => {
         this.projects = res.result && res.result.data

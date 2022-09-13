@@ -31,7 +31,7 @@
     <template v-slot:headerContentRender>
       <div>
         <a-tooltip title="刷新页面">
-          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="() => { $message.info('只是一个DEMO') }" />
+          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="() => { $message.info('刷新页面') }" />
         </a-tooltip>
       </div>
     </template>
@@ -42,12 +42,12 @@
       </div>
     </setting-drawer>
     <template v-slot:rightContentRender>
-      <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
+      <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" :username="username" />
     </template>
     <!-- custom footer / 自定义Footer -->
-    <template v-slot:footerRender>
-      <global-footer />
-    </template>
+    <!--    <template v-slot:footerRender>-->
+    <!--      <global-footer />-->
+    <!--    </template>-->
     <router-view />
   </pro-layout>
 </template>
@@ -106,12 +106,14 @@ export default {
 
       // 是否手机模式
       isMobile: false
+      // username: ''
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters
+      mainMenu: state => state.permission.addRouters,
+      username: state => state.user.info.username
     })
   },
   created () {

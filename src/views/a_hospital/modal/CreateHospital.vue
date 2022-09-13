@@ -10,11 +10,14 @@
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
         <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
-        <a-form-item v-show="model && model.id > 0" label="主键ID" style='display: none'>
-          <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+        <a-form-item v-show="model && model.id > 0" label="主键ID" style="display: none">
+          <a-input v-decorator="['id', { initialValue: 0 }]" disabled style="display: none"/>
         </a-form-item>
         <a-form-item label="医院名称">
           <a-input v-decorator="['name', {rules: [{required: true, message: '请输入医院名'}]}]" />
+        </a-form-item>
+        <a-form-item label="备注/描述">
+          <a-input v-decorator="['description']" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -26,7 +29,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'id']
+const fields = ['name', 'id', 'description']
 export default {
   name: 'CreateHospital',
   props: {

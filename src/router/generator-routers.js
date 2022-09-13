@@ -26,6 +26,8 @@ const constantRouterComponents = {
   // 医院质检配置
   HospitalConfig: () => import('@/views/a_hospital/HospitalConfig'),
 
+  CheckInfo: () => import('@/views/a_check/CheckInfo'),
+
   // 你需要动态引入的页面组件
   Workplace: () => import('@/views/dashboard/Workplace'),
   Analysis: () => import('@/views/dashboard/Analysis'),
@@ -92,10 +94,13 @@ const rootRouter = {
  * @param token
  * @returns {Promise<Router>}
  */
-export const generatorDynamicRouter = token => {
+export const generatorDynamicRouter = ({ token, role }) => {
+  console.log('----------------------')
+  console.log(role)
+  const { roleInt, hospitalId } = role
   return new Promise((resolve, reject) => {
     loginService
-      .getCurrentUserNav(token)
+      .getNav({ role: roleInt, hospitalId })
       .then(res => {
         console.log('generatorDynamicRouter response:', res)
         const { result } = res
