@@ -7,7 +7,7 @@
       :key="index"
       :title="item.name">
       <!--      <a slot="extra" href="#">未完成</a>-->
-      <a slot="extra" href="#" style="color: red">{{ item.status == 0?"待检测": item.status == 1?"待批准":"已完成" }}</a>
+      <a slot="extra" href="#" style="color: red">{{ !item.status?"待检测": +item.status == 1?"待批准":"已完成" }}</a>
       <div style="display: flex;margin-bottom: 10px">
         <span style="width: 120px;display: inline-block">检测目的:</span>
         <div style="width: calc(100% - 120px)">{{ item.goal }}</div>
@@ -77,8 +77,10 @@ export default {
       if (isApprove) {
         +item.status === 2 ? item.status = 1 : item.status = 2
       } else {
-        item.status = !!item?.msg
+        item.status = +!!item?.msg
+        console.log(item.msg)
       }
+      console.log('===========================', item)
 
       // console.log(this.confirmListData)
       console.log(this.checkData.inspect)
