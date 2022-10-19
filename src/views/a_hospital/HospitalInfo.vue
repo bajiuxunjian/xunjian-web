@@ -54,7 +54,7 @@
       ref="table"
       rowKey="key"
       :data="listData"
-      showPagination="auto"
+      :showPagination="false"
     >
       <span slot="status" slot-scope="text">
         <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
@@ -282,6 +282,7 @@ export default {
       listData: parameter => {
         const hId = store.state.user.info.hospitalId || this.$route.query.id
         parameter.pageNum = parameter.pageNo
+        parameter.pageSize = 1000000
         return getCheckListByHospitalId(Object.assign(parameter, { hospitalId: hId || null }))
           .then(res => {
             this.list = res.data

@@ -22,6 +22,22 @@ import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
 
+import OSS from 'ali-oss'
+
+window.client = new OSS({
+  // yourRegion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou
+  region: 'oss-cn-zhangjiakou',
+  bucket: 'xunjian89',
+  // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
+  accessKeyId: 'LTAI5t81TEb8BWreakY6krH5',
+  accessKeySecret: 'zN5zoWOIOjzgzKZyMa84M5RQ8bQOZr'
+  // expiration:yourExpiration,
+  // // 从STS服务获取的安全令牌（SecurityToken）。
+  // stsToken: yourSecurityToken,
+})
+// console.log('------------------- run this ---------------')
+// console.log(window.client)
+
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`

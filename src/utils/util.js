@@ -227,6 +227,28 @@ export const userNav = options => {
           show: false
         },
         component: 'CheckInfo'
+      },
+      {
+        name: 'user',
+        parentId: 0,
+        id: 891,
+        meta: {
+          title: '用户组',
+          show: true,
+          icon: 'form'
+        },
+        component: 'RouteView',
+        redirect: '/user/user-config'
+      },
+      {
+        name: 'user-config',
+        parentId: 891,
+        id: 892,
+        meta: {
+          title: '用户配置',
+          show: true
+        },
+        component: 'User'
       }
 
       // dashboard

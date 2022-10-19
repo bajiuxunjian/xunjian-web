@@ -25,6 +25,8 @@ const constantRouterComponents = {
   HospitalInfo: () => import('@/views/a_hospital/HospitalInfo'),
   // 医院质检配置
   HospitalConfig: () => import('@/views/a_hospital/HospitalConfig'),
+  // 用户组
+  User: () => import('@/views/a_user/User'),
 
   CheckInfo: () => import('@/views/a_check/CheckInfo'),
 
@@ -95,8 +97,8 @@ const rootRouter = {
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = ({ token, role }) => {
-  console.log('----------------------')
-  console.log(role)
+  // console.log('----------------------')
+  // console.log(role)
   const { roleInt, hospitalId } = role
   return new Promise((resolve, reject) => {
     loginService

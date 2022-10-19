@@ -55,7 +55,7 @@ export function login1 (parameter) {
 
 export async function login (parameter) {
   const { data } = await request({
-    url: 'http://localhost:8089/configcenter/user/login',
+    url: 'http://47.92.99.126:8089/configcenter/user/login',
     method: 'get',
     params: parameter
   })
@@ -80,7 +80,7 @@ export function getSmsCaptcha (parameter) {
 
 export async function getInfo (parameter) {
   const { data } = await request({
-    url: 'http://localhost:8089/configcenter/user/get',
+    url: 'http://47.92.99.126:8089/configcenter/user/get',
     method: 'get',
     params: parameter
   })
@@ -111,7 +111,7 @@ export function getCurrentUserNav () {
 
 export function logout () {
   return request({
-    url: 'http://localhost:8089/health',
+    url: 'http://47.92.99.126:8089/health',
     method: 'get'
   })
 }

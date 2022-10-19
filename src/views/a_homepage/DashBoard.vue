@@ -19,7 +19,7 @@
         <!--          <a-statistic title="医院数" :value="2" />-->
         <!--        </div>-->
         <div class="stat-item">
-<!--          <a-statistic title="今日已完成质检单位" :value="8" suffix="/ 24" />-->
+          <!--          <a-statistic title="今日已完成质检单位" :value="8" suffix="/ 24" />-->
         </div>
       </div>
     </template>
@@ -47,32 +47,32 @@
                       {{ item.description }}
                     </div>
                   </a-card-meta>
-<!--                  <div class="project-item">-->
-<!--                    <a href="/#/">最后更新</a>-->
-<!--                    <span class="datetime">9小时前</span>-->
-<!--                  </div>-->
+                  <!--                  <div class="project-item">-->
+                  <!--                    <a href="/#/">最后更新</a>-->
+                  <!--                    <span class="datetime">9小时前</span>-->
+                  <!--                  </div>-->
                 </a-card>
               </a-card-grid>
             </div>
           </a-card>
 
-<!--          <a-card :loading="loading" title="动态" :bordered="false">-->
-<!--            <a-list>-->
-<!--              <a-list-item :key="index" v-for="(item, index) in activities">-->
-<!--                <a-list-item-meta>-->
-<!--                  <a-avatar slot="avatar" size="small" :src="item.user.avatar" />-->
-<!--                  <div slot="title">-->
-<!--                    <span>{{ item.user.nickname }}</span-->
-<!--                    >&nbsp; 在&nbsp;<a href="#">{{ item.project.name }}</a-->
-<!--                    >&nbsp; <span>{{ item.project.action }}</span-->
-<!--                    >&nbsp;-->
-<!--                    <a href="#">{{ item.project.event }}</a>-->
-<!--                  </div>-->
-<!--                  <div slot="description">{{ item.time }}</div>-->
-<!--                </a-list-item-meta>-->
-<!--              </a-list-item>-->
-<!--            </a-list>-->
-<!--          </a-card>-->
+          <!--          <a-card :loading="loading" title="动态" :bordered="false">-->
+          <!--            <a-list>-->
+          <!--              <a-list-item :key="index" v-for="(item, index) in activities">-->
+          <!--                <a-list-item-meta>-->
+          <!--                  <a-avatar slot="avatar" size="small" :src="item.user.avatar" />-->
+          <!--                  <div slot="title">-->
+          <!--                    <span>{{ item.user.nickname }}</span-->
+          <!--                    >&nbsp; 在&nbsp;<a href="#">{{ item.project.name }}</a-->
+          <!--                    >&nbsp; <span>{{ item.project.action }}</span-->
+          <!--                    >&nbsp;-->
+          <!--                    <a href="#">{{ item.project.event }}</a>-->
+          <!--                  </div>-->
+          <!--                  <div slot="description">{{ item.time }}</div>-->
+          <!--                </a-list-item-meta>-->
+          <!--              </a-list-item>-->
+          <!--            </a-list>-->
+          <!--          </a-card>-->
         </a-col>
         <!--        <a-col-->
         <!--          style="padding: 0 12px"-->

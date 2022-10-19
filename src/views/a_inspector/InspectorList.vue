@@ -65,7 +65,7 @@ export default {
     async getAllInspectorList () {
       const res = await getAllInspectorList()
       this.inspectorList = res?.data || []
-      console.log('=====================', this.inspectorList)
+      // console.log('=====================', this.inspectorList)
       this.inspectorList.unshift({})
     },
     // 跳入新增
@@ -81,7 +81,6 @@ export default {
         console.error('结果异常')
       }
     }
-
   },
   data () {
     return {

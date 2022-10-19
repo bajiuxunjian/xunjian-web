@@ -19,7 +19,7 @@ export default api
 export function getHospitalList (parameter) {
   return request({
     // url: api.hospitalList,
-    url: 'http://localhost:8089/configcenter/hospitalInfo/list',
+    url: 'http://47.92.99.126:8089/configcenter/hospitalInfo/list',
     method: 'get',
     params: parameter
   })
@@ -31,7 +31,7 @@ export function getHospitalList (parameter) {
 export function getHospitalInfo (parameter) {
   return request({
     // url: api.service,
-    url: 'http://localhost:8089/configcenter/hospitalInfo/get',
+    url: 'http://47.92.99.126:8089/configcenter/hospitalInfo/get',
     method: 'get',
     params: parameter
   })
@@ -41,7 +41,7 @@ export function getHospitalInfo (parameter) {
 export function createHospital (data) {
   return request({
     // url: userApi.twoStepCode,
-    url: 'http://localhost:8089/configcenter/hospitalInfo/create',
+    url: 'http://47.92.99.126:8089/configcenter/hospitalInfo/create',
     method: 'post',
     data
   })
@@ -50,7 +50,7 @@ export function createHospital (data) {
 export function updateHospitalInfo (data) {
   return request({
     // url: userApi.twoStepCode,
-    url: 'http://localhost:8089/configcenter/hospitalInfo/update',
+    url: 'http://47.92.99.126:8089/configcenter/hospitalInfo/update',
     method: 'post',
     data
   })
@@ -60,7 +60,7 @@ export function updateHospitalInfo (data) {
 export function getAllInspectorList (parameter) {
   return request({
     // url: api.service,
-    url: 'http://localhost:8089/configcenter/inspector/list',
+    url: 'http://47.92.99.126:8089/configcenter/inspector/list',
     method: 'get',
     params: parameter
   })
@@ -69,7 +69,7 @@ export function getAllInspectorList (parameter) {
 export function delInspectorById (parameter) {
   return request({
     // url: api.service,
-    url: 'http://localhost:8089/configcenter/inspector/del',
+    url: 'http://47.92.99.126:8089/configcenter/inspector/del',
     method: 'get',
     params: parameter
   })
@@ -78,7 +78,7 @@ export function delInspectorById (parameter) {
 export function getInspectorById (parameter) {
   return request({
     // url: api.service,
-    url: 'http://localhost:8089/configcenter/inspector/get',
+    url: 'http://47.92.99.126:8089/configcenter/inspector/get',
     method: 'get',
     params: parameter
   })
@@ -87,7 +87,7 @@ export function getInspectorById (parameter) {
 export function createInspector (data) {
   return request({
     // url: userApi.twoStepCode,
-    url: 'http://localhost:8089/configcenter/inspector/create',
+    url: 'http://47.92.99.126:8089/configcenter/inspector/create',
     method: 'post',
     data
   })
@@ -97,7 +97,7 @@ export function createInspector (data) {
 export function updateInspector (data) {
   return request({
     // url: userApi.twoStepCode,
-    url: 'http://localhost:8089/configcenter/inspector/update',
+    url: 'http://47.92.99.126:8089/configcenter/inspector/update',
     method: 'post',
     data
   })
